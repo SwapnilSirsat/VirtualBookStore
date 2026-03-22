@@ -14,7 +14,7 @@ import java.time.temporal.ChronoUnit;
 public class JwtUtil {
 
     private static final String SECRET =
-            "this-is-a-very-long-256-bit-secret-key-for-bookstore-app";
+            "";
 
     private final JwtEncoder jwtEncoder;
     private final JwtDecoder jwtDecoder;
