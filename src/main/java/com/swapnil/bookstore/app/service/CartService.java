@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class CartService {
+    
+    // cart service is working fine
 
     private final RedisTemplate<String, Map<Long, Integer>> redis;
 
@@ -20,7 +22,7 @@ public class CartService {
 
     public void add(Long userId, Long bookId, int qty) {
         String key = "cart:" + userId;
-        redis.opsForHash().put(key, String.valueOf(bookId), qty);
+        redis.opsForHash().increment(key, String.valueOf(bookId), qty);
         // later add this cart to db too;
     }
 
