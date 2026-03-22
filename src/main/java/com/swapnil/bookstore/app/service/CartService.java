@@ -20,14 +20,14 @@ public class CartService {
 
     public void add(Long userId, Long bookId, int qty) {
         String key = "cart:" + userId;
-        redis.opsForHash().put(key, bookId,qty);
+        redis.opsForHash().put(key, String.valueOf(bookId), qty);
         // later add this cart to db too;
     }
 
     public Map<Long, Integer> get(Long userId) {
         try {
             return redis.opsForHash().entries("cart:" + userId).entrySet().stream().collect(Collectors.toMap(
-                    entry -> (Long) entry.getKey(),     // Key Mapper: Cast Object key to Long
+                    entry -> Long.parseLong((String) entry.getKey()),     // Key Mapper: Parse String key to Long
                     entry -> (Integer) entry.getValue(),// Value Mapper: Cast Object value to Integer
                     (oldValue, newValue) -> oldValue,   // Merge function for duplicate keys (optional, but good practice)
                     HashMap::new                       // Supplier to ensure a HashMap is created
